@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="MessageDAO">
+  
+	  
+	  <select id="testList">
+	  	select 
+	  		from_user_id, 
+	  		to_user_id, 
+	  		create_date, 
+	  		read_yn, 
+	  		message_content, 
+	  		app_type, 
+	  		prj_id 
+	  	from tb_message
+	  
+	  
+	  
+	  </select>
+  
+	  <select id="list" parameterType="String">
+	  	select 
+	  		from_user_id, 
+	  		to_user_id, 
+	  		create_date, 
+	  		read_yn, 
+	  		message_content, 
+	  		app_type, 
+	  		prj_id 
+	  	from tb_message
+	  
+	  </select>
+  
+  </mapper>

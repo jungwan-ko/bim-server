@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="orgMapper">
+
+	<select id="list" resultType="kr.bim.ports.category.dao.CategoryDTO">
+		SELECT org_item_seq, org_item_cont, org_item_group, org_item_sort, org_item_parent, org_item_level, file_grp_id, org_item_title,
+					update_date, create_date, update_user_id, create_user_id, create_ip, use_yn, org_id, org_item_type
+		FROM tb_org_item
+		ORDER BY org_item_group DESC
+	</select>
+	
+	<!--returnType object  -->
+	<insert id="create" parameterType="kr.bim.ports.category.dao.CategoryDTO">
+		INSERT into tb_org_item (
+			org_item_seq,
+			org_item_cont,
+			org_item_group,
+			org_item_sort,
+			org_item_parent,
+			org_item_level,
+			file_grp_id,
+			org_item_title,
+			update_date,
+			create_date,
+			update_user_id,
+			create_user_id,
+			create_ip,
+			use_yn,
+			org_id,
+			org_item_type) 
+		VALUES
+			(nextval(tb_org_item_seq), #{org_item_cont}, #{org_item_group}, #{org_item_sort}, #{org_item_parent}, #{org_item_level},
+			#{file_grp_id}, #{org_item_title}, #{update_date}, #{create_date}, #{update_user_id}, #{create_user_id}, #{create_ip},
+			#{use_yn}, #{org_id}, #{org_item_type})
+	</insert>
+
+
+</mapper>

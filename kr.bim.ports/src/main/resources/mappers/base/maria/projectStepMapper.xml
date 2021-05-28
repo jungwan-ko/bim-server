@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectStep">
+	<select id="list" parameterType="hashMap" resultType="projectStepDto">
+		<![CDATA[
+			select
+				t1.items_seq,
+				t1.category_seq,
+				t1.user_id,
+				t1.confirm_yn,
+				t1.create_date,
+				t1.update_date,
+				t1.update_user_id,
+				t1.create_user_id,
+				t1.prj_id,
+				t1.step_yn,
+				t1.process_code,
+				t1.confirm_date,
+				t2.user_name mng_user_name,
+				t3.user_name create_user_name,
+				t4.category_title,
+				t5.sys_title process_code_title
+			from
+				tb_project_step t1
+				left join tb_project_users t2 on t1.user_id=t2.user_id and t2.prj_id=#{prj_id} and t2.use_yn ='Y'
+				left join tb_project_users t3 on t1.create_user_id=t3.user_id and t3.prj_id=#{prj_id} and t3.use_yn ='Y'
+				left join tb_project_category t4 on t1.category_seq=t4.category_seq and t4.prj_id=#{prj_id} and t4.use_yn ='Y'
+				left join tc_code_sys t5 on t1.process_code=t5.sys_code and t5.use_yn ='Y'
+			where
+				t1.prj_id=#{prj_id}
+				
+			order by t1.items_seq,	t1.category_seq
+		]]>
+	</select>
+	
+	<update id="create" parameterType="projectStepDto">
+		insert
+		into
+		tb_project_step (
+		items_seq,
+		category_seq,
+		user_id,
+		confirm_yn,
+		create_date,
+		update_date,
+		update_user_id,
+		create_user_id,
+		prj_id,
+		step_yn,
+		process_code
+		)
+	values(
+		#{items_seq},
+		#{category_seq},
+		#{user_id},
+		#{confirm_yn},
+		now(),
+		now(),
+		#{update_user_id},
+		#{create_user_id},
+		#{prj_id},
+		#{step_yn},
+		#{process_code}
+		)
+	</update>
+	
+	<update id="update" parameterType="projectStepDto">
+		update tb_project_step
+		set confirm_yn=#{confirm_yn},
+			update_date=now(),
+			user_id=#{user_id},
+			update_user_id=#{update_user_id}
+		where 
+		items_seq=#{items_seq}
+		and
+		category_seq=#{category_seq}
+	</update>
+	
+	<update id="drop"  parameterType="hashMap">
+		delete from tb_project_step
+		where
+		items_seq=#{items_seq}
+		and
+		category_seq=#{category_seq}
+		and
+		prj_id=#{prj_id}
+	</update>
+</mapper>

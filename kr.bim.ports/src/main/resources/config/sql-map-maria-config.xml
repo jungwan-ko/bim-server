@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- <settings cacheModelsEnabled="true" enhancementEnabled="true" lazyLoadingEnabled="true" 
+		errorTracingEnabled="false" maxRequests="512" maxSessions="128" maxTransactions="32" 
+		useStatementNamespaces="true" /> -->
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<typeAliases>
+		<!-- base 시작 -->
+		<typeAlias alias="fileDTO" type="com.web.base.file.dao.AttachFileDTO" />
+		<typeAlias alias="codeSysDTO" type="com.web.base.code.dao.CodeSysDTO" />
+		<typeAlias alias="codeGrpDTO" type="com.web.base.code.dao.CodeGrpDTO" />
+		<typeAlias alias="metaDTO" type="com.web.base.meta.dao.MetaDTO" />
+		<typeAlias alias="metaAdmDTO" type="com.web.base.meta.dao.MetaAdmDTO" />
+		<typeAlias alias="metaLawDTO" type="com.web.base.meta.dao.MetaLawDTO" />
+		<typeAlias alias="menuDTO" type="com.web.base.menu.dao.MenuDTO" />
+		<typeAlias alias="menuLogDTO" type="com.web.base.menu.dao.MenuLogDTO" />
+		<typeAlias alias="menuRoleDTO" type="com.web.base.menu.dao.MenuRoleDTO" />
+		<typeAlias alias="roleDTO" type="com.web.base.account.dao.RoleDTO" />
+		<typeAlias alias="userDTO" type="com.web.base.account.dao.UserDTO" />
+		<typeAlias alias="userPhotoDto" type="com.web.base.account.dao.UserPhotoDto" />
+		<typeAlias alias="userMsgDTO" type="com.web.base.account.dao.UserMsgDTO" />
+		<typeAlias alias="userRoleDTO" type="com.web.base.account.dao.UserRoleDTO" />
+		<typeAlias alias="bbsCategoryDTO" type="com.web.base.bbs.dao.BBSCategoryDTO" />
+		<typeAlias alias="bbsContentDTO" type="com.web.base.bbs.dao.BBSContentDTO" />
+		<typeAlias alias="bbsMasterDTO" type="com.web.base.bbs.dao.BBSMasterDTO" />
+		<typeAlias alias="bbsRoleDTO" type="com.web.base.bbs.dao.BBSRoleDTO" />
+		<typeAlias alias="bbsUserRoleDTO" type="com.web.base.bbs.dao.BBSUserRoleDTO" />
+		<typeAlias alias="bbsLogDTO" type="com.web.base.bbs.dao.BBSLogDTO" />
+		<typeAlias alias="bbsUserDTO" type="com.web.base.bbs.dao.BBSUserDTO" />
+		<typeAlias alias="bbsCommentDto" type="com.web.base.bbs.dao.BBSCommentDto" />
+		<typeAlias alias="loginLogDTO" type="com.web.base.account.dao.LoginLogDTO" />
+		<typeAlias alias="partnerSiteDto" type="com.web.base.site.dao.PartnerSiteDto" />
+		<typeAlias alias="projectMasterDto" type="com.web.base.project.dao.ProjectMasterDto" />
+		<typeAlias alias="projectItemsDto" type="com.web.base.project.dao.ProjectItemsDto" />
+		<typeAlias alias="projectItemsExtDto" type="com.web.base.project.dao.ProjectItemsExtDto" />
+		<typeAlias alias="projectStepDto" type="com.web.base.project.dao.ProjectStepDto" />
+		<typeAlias alias="projectFilesDto" type="com.web.base.project.dao.ProjectFilesDto" />
+		<typeAlias alias="projectCategoryDto" type="com.web.base.project.dao.ProjectCategoryDto" />
+		<typeAlias alias="projectUsersDto" type="com.web.base.project.dao.ProjectUsersDto" />
+		<typeAlias alias="dbInfoDTO" type="com.web.base.file.dao.DBInfoDTO" />
+		<!-- added -->
+		<typeAlias alias="messageDTO" type="kr.bim.ports.message.dao.MessageDTO"/>
+		<!-- base end-->
+	</typeAliases>
+	<mappers>
+		<!-- base -->
+		<mapper resource="mappers/base/maria/attachFileMapper.xml" />
+		<mapper resource="mappers/base/maria/codeSysMapper.xml" />
+		<mapper resource="mappers/base/maria/menuMapper.xml" />
+		<mapper resource="mappers/base/maria/menuRoleMapper.xml" />
+		<mapper resource="mappers/base/maria/roleMapper.xml" />
+		<mapper resource="mappers/base/maria/userMapper.xml" />
+		<mapper resource="mappers/base/maria/userMsgMapper.xml" />
+		<mapper resource="mappers/base/maria/userRoleMapper.xml" />
+		<mapper resource="mappers/base/maria/userPhotoMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsCategoryMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsContentMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsCommentMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsMasterMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsRoleMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsUserRoleMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsLogMapper.xml" />
+		<mapper resource="mappers/base/maria/bbsUserMapper.xml" />
+		<mapper resource="mappers/base/maria/roleMapper.xml" />
+		<mapper resource="mappers/base/maria/metaAdmMapper.xml" />
+		<mapper resource="mappers/base/maria/metaLawMapper.xml" />
+		<mapper resource="mappers/base/maria/metaMapper.xml" />
+		<mapper resource="mappers/base/maria/loginLogMapper.xml" />
+		<mapper resource="mappers/base/maria/partnerSiteMapper.xml" />
+		<mapper resource="mappers/base/maria/projectMasterMapper.xml" />
+		<mapper resource="mappers/base/maria/projectItemsMapper.xml" />   
+		<mapper resource="mappers/base/maria/projectUsersMapper.xml" />   
+		<mapper resource="mappers/base/maria/projectFilesMapper.xml" />   
+		<mapper resource="mappers/base/maria/projectStepMapper.xml" />   
+		<mapper resource="mappers/base/maria/projectCategoryMapper.xml" />       
+		<!-- base end-->
+		
+		<!--채성 추가  -->
+		<mapper resource="mappers/base/maria/kcs/orgMapper.xml" />
+		
+		<!-- added -->
+		<mapper resource="mappers/base/maria/khk/MessageMapper.xml" />      
+	</mappers>
+</configuration>

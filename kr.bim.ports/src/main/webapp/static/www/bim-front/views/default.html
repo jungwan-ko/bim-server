@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bracket CSS -->
+    <link href="/www/contents/template/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/Ionicons/css/ionicons.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/jquery-switchbutton/jquery.switchButton.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/rickshaw/rickshaw.min.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/select2/css/select2.min.css" rel="stylesheet">
+    <link href="/www/contents/template/lib/datatables/jquery.dataTables.css" rel="stylesheet">
+    <link rel="stylesheet" href="/www/css/leaflet.css"></link>
+    <link rel="stylesheet" href="/www/css/leaflet.draw.css"></link>
+    <!-- Bracket CSS -->
+    <link rel="stylesheet" href="/www/contents/template/css/bracket.css">
+    <link rel="stylesheet" href="/www/base/plugins/sweet-alert2/sweetalert2.min.css">
+    <link rel="stylesheet" href="/www/contents/custom/css/vue-calendar-simple.css">
+    <!-- summernote JS -->
+    <link rel="stylesheet" href="/www/base/plugins/summernote/summernote-bs4.css">
+    <link rel="stylesheet" href="/www/base/css/www.base.css">
+    <script>
+      var domain="http://localhost:8080";
+    </script>
+    <style type="text/css">
+     .ql-snow .ql-tooltip{
+       margin-left: 200px;
+     }
+    </style>
+</head>
+<body>
+    <div id="app">
+    <!-- ########## START: LEFT PANEL ########## -->
+    <div class="br-logo"><router-link to="/"><img src="/www/contents/images/bim/h1_logo.png"/></router-link></div>
+    <div class="br-sideleft overflow-y-auto ps ps--theme_default" >
+      <div class="sidebar-top">
+        <img src="/www/contents/images/avatar-admin.png" class="profile-image rounded-circle" alt="">
+                            <div class="info-card-text">
+                                <a href="#" class="d-flex align-items-center text-white">
+                                    <span class="pt-4 d-inline-block">
+                                       이곳에 프로젝트명이 출력됩니다.
+                                        
+                                    </span>
+                                </a>
+                                <span class="d-inline-block text-truncate text-truncate-sm"></span>
+                            </div>
+        <img src="/www/contents/images/cover-2-lg.png" class="cover"/>
+      </div>
+      <label class="sidebar-label pd-x-10 mg-t-20 op-3">Navigation</label>
+      <ul class="br-sideleft-menu">
+        <li class="br-menu-item">
+          <a href="#" class="br-menu-link  ">
+            <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+            <span class="menu-item-label">프로젝트</span>
+          </a>
+        </li>
+        <li class="br-menu-item">
+            <a href="#" class="br-menu-link  ">
+              <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+              <span class="menu-item-label">아카이브</span>
+            </a>
+          </li>
+          <li class="br-menu-item">
+            <a href="#" class="br-menu-link  ">
+              <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+              <span class="menu-item-label">항만 CLAS</span>
+            </a>
+          </li>
+          <li class="br-menu-item">
+            <a href="#" class="br-menu-link  ">
+              <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+              <span class="menu-item-label">POMS</span>
+            </a>
+          </li>
+          <li class="br-menu-item">
+            <a href="#" class="br-menu-link  ">
+              <i class="menu-item-icon icon ion-ios-filing-outline tx-24"></i>
+              <span class="menu-item-label">게시판</span>
+            </a>
+          </li>
+        
+      </ul><!-- br-sideleft-menu -->
+      <br>
+    <div class="ps__scrollbar-x-rail" style="left: 0px; bottom: 0px;"><div class="ps__scrollbar-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__scrollbar-y-rail" style="top: 0px; right: 0px;"><div class="ps__scrollbar-y" tabindex="0" style="top: 0px; height: 0px;"></div></div></div><!-- br-sideleft -->
+    <!-- ########## END: LEFT PANEL ########## -->
+
+    <!-- ########## START: HEAD PANEL ########## -->
+    <div class="br-header">
+      <div class="br-header-left">
+        <div class="navicon-left hidden-md-down"><a id="btnLeftMenu" href=""><i class="icon ion-navicon-round"></i></a></div>
+        <div class="navicon-left hidden-lg-up"><a id="btnLeftMenuMobile" href=""><i class="icon ion-navicon-round"></i></a></div>
+     
+      </div><!-- br-header-left -->
+      <div class="br-header-right">
+        <nav class="nav">
+        
+          
+          <div class="dropdown">
+            <a href="" class="nav-link pd-x-7 pos-relative" data-toggle="dropdown">
+              <i class="icon ion-ios-bell-outline tx-24"></i>
+              <!-- start: if statement -->
+              <span class="square-8 bg-danger pos-absolute t-15 r-5 rounded-circle"></span>
+              <!-- end: if statement -->
+            </a>
+            <div class="dropdown-menu dropdown-menu-header">
+              <div class="dropdown-menu-label">
+                <label>Notifications</label>
+                <a href="">Mark All as Read</a>
+              </div><!-- d-flex -->
+
+              <div class="media-list">
+                <!-- loop starts here -->
+                <a href="" class="media-list-link read">
+                  <div class="media">
+                    <img src="http://via.placeholder.com/280x280" alt="">
+                    <div class="media-body">
+                      <p class="noti-text"><strong>Suzzeth Bungaos</strong> tagged you and 18 others in a post.</p>
+                      <span>October 03, 2017 8:45am</span>
+                    </div>
+                  </div><!-- media -->
+                </a>
+                <!-- loop ends here -->
+                <a href="" class="media-list-link read">
+                  <div class="media">
+                    <img src="http://via.placeholder.com/280x280" alt="">
+                    <div class="media-body">
+                      <p class="noti-text"><strong>Mellisa Brown</strong> appreciated your work <strong>The Social Network</strong></p>
+                      <span>October 02, 2017 12:44am</span>
+                    </div>
+                  </div><!-- media -->
+                </a>
+                <a href="" class="media-list-link read">
+                  <div class="media">
+                    <img src="http://via.placeholder.com/280x280" alt="">
+                    <div class="media-body">
+                      <p class="noti-text">20+ new items added are for sale in your <strong>Sale Group</strong></p>
+                      <span>October 01, 2017 10:20pm</span>
+                    </div>
+                  </div><!-- media -->
+                </a>
+                <a href="" class="media-list-link read">
+                  <div class="media">
+                    <img src="http://via.placeholder.com/280x280" alt="">
+                    <div class="media-body">
+                      <p class="noti-text"><strong>Julius Erving</strong> wants to connect with you on your conversation with <strong>Ronnie Mara</strong></p>
+                      <span>October 01, 2017 6:08pm</span>
+                    </div>
+                  </div><!-- media -->
+                </a>
+                <div class="dropdown-footer">
+                  <a href=""><i class="fa fa-angle-down"></i> Show All Notifications</a>
+                </div>
+              </div><!-- media-list -->
+            </div><!-- dropdown-menu -->
+          </div><!-- dropdown -->
+          <div class="dropdown">
+            <a href="" class="nav-link nav-link-profile">
+              <span class="logged-name hidden-md-down">Katherine</span>
+              <img src="http://via.placeholder.com/500x500" class="wd-32 rounded-circle" alt="">
+              <span class="square-10 bg-success"></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-header wd-250">
+              <div class="tx-center">
+                <a href=""><img src="http://via.placeholder.com/500x500" class="wd-80 rounded-circle" alt=""></a>
+                <h6 class="logged-fullname">Katherine P. Lumaad</h6>
+                <p>youremail@domain.com</p>
+              </div>
+              <hr>
+              <div class="tx-center">
+                <span class="profile-earning-label">Earnings After Taxes</span>
+                <h3 class="profile-earning-amount">$13,230 <i class="icon ion-ios-arrow-thin-up tx-success"></i></h3>
+                <span class="profile-earning-text">Based on list price.</span>
+              </div>
+              <hr>
+              <ul class="list-unstyled user-profile-nav">
+                <li><a href=""><i class="icon ion-ios-person"></i> Edit Profile</a></li>
+                <li><a href=""><i class="icon ion-ios-gear"></i> Settings</a></li>
+                <li><a href=""><i class="icon ion-ios-download"></i> Downloads</a></li>
+                <li><a href=""><i class="icon ion-ios-star"></i> Favorites</a></li>
+                <li><a href=""><i class="icon ion-ios-folder"></i> Collections</a></li>
+                <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+              </ul>
+            </div><!-- dropdown-menu -->
+          </div><!-- dropdown -->
+        </nav>
+     
+      </div><!-- br-header-right -->
+    </div><!-- br-header -->
+    <!-- ########## END: HEAD PANEL ########## -->
+
+    <!-- ########## START: RIGHT PANEL ########## -->
+    
+    <!-- ########## END: RIGHT PANEL ########## --->
+
+    <!-- ########## START: MAIN PANEL ########## -->
+    <div class="br-mainpanel">
+      <div class="br-pageheader">
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+          <a class="breadcrumb-item" href="index.html"> Bracket</a>
+          <span class="breadcrumb-item active">Blank Page</span>
+        </nav>
+      </div><!-- br-pageheader -->
+      <div class="br-pagetitle">
+        <!-- <i class="icon icon ion-ios-book-outline"></i> -->
+        <div style="margin-left: -15px;">
+          <!-- <h4>Blank Page (Default Layout)</h4>
+          <p class="mg-b-0">Introducing Bracket Plus admin template, the most handsome admin template of all time.</p> -->
+       
+
+        </div>
+
+      </div><!-- d-flex -->
+
+      <div class="br-pagebody">
+        
+      <router-view></router-view>
+
+      </div>
+
+
+    </div><!-- br-mainpanel -->
+  </div>
+
+
+    <!-- ########## END: MAIN PANEL ########## -->
+    <script src="/www/contents/template/lib/jquery/jquery.js"></script>
+    <script src="/www/contents/template/lib/popper.js"></script>
+    <script src="/www/contents/template/lib/bootstrap/js/bootstrap.js"></script>
+    <script src="/www/contents/template/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
+    <script src="/www/contents/template/lib/moment/moment.js"></script>
+    <script src="/www/contents/template/lib/jquery-ui/jquery-ui.js"></script>
+    <script src="/www/contents/template/lib/jquery-switchbutton/jquery.switchButton.js"></script>
+    <script src="/www/contents/template/lib/peity/jquery.peity.js"></script>
+    <script src="/www/contents/template/lib/d3/d3.js"></script>
+    <script src="/www/contents/template/lib/rickshaw/rickshaw.min.js"></script>
+    <script src="/www/contents/template/lib/Flot/jquery.flot.js"></script>
+    <script src="/www/contents/template/lib/Flot/jquery.flot.resize.js"></script>
+    <script src="/www/contents/template/lib/flot-spline/jquery.flot.spline.js"></script>
+    <script src="/www/contents/template/lib/jquery.sparkline.bower/jquery.sparkline.min.js"></script>
+    <script src="/www/contents/template/lib/echarts/echarts.min.js"></script>
+    <script src="/www/contents/template/lib/select2/js/select2.full.min.js"></script>
+    <script src="/www/contents/template/js/bracket.js"></script>
+    <script src="/www/contents/template/js/ResizeSensor.js"></script>
+    <script src="/www/contents/template/lib/datatables/jquery.dataTables.js"></script>
+    <script src="/www/contents/template/lib/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="/www/base/plugins/sweet-alert2/sweetalert2.min.js"></script>
+    <script src="/www/base/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="/www/base/plugins/summernote/lang/summernote-ko-KR.min.js"></script>
+    <script src="/www/bim-front/js/components/admin-controller.min.js"></script>
+    <script>
+        $(function () {
+          'use strict'
+    
+    
+    
+          // FOR DEMO ONLY
+          // menu collapsed by default during first page load or refresh with screen
+          // having a size between 992px and 1299px. This is intended on this page only
+          // for better viewing of widgets demo.
+          $(window).resize(function () {
+            minimizeMenu();
+          });
+    
+          minimizeMenu();
+    
+          function minimizeMenu() {
+            if (window.matchMedia('(min-width: 992px)').matches && window.matchMedia('(max-width: 1299px)').matches) {
+              // show only the icons and hide left menu label by default
+              $('.menu-item-label,.menu-item-arrow').addClass('op-lg-0-force d-lg-none');
+              $('body').addClass('collapsed-menu');
+              $('.show-sub + .br-menu-sub').slideUp();
+            } else if (window.matchMedia('(min-width: 1300px)').matches && !$('body').hasClass('collapsed-menu')) {
+              $('.menu-item-label,.menu-item-arrow').removeClass('op-lg-0-force d-lg-none');
+              $('body').removeClass('collapsed-menu');
+              $('.show-sub + .br-menu-sub').slideDown();
+            }
+          }
+    
+         
+    
+        });
+    
+   
+        $('.modal').modal('hide')
+      
+    
+        $('.fc-datepicker').datepicker({
+        showOtherMonths: true,
+        selectOtherMonths: true,
+        numberOfMonths: 1,
+        dateFormat:'yy-mm-dd',
+        prevText: '이전 달',
+        nextText: '다음 달',
+        monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+        dayNames: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
+        yearSuffix: '년'
+      });
+      </script>
+
+      
+
+</body>
+</html>

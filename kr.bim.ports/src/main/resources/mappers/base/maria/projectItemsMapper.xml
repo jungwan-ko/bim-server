@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectItems">
+	<update id="create" parameterType="projectItemsDto" >
+	<selectKey keyProperty="seq" resultType="Integer" order="BEFORE"> SELECT nextval(tb_project_items_seq) FROM dual </selectKey>
+		<![CDATA[
+		insert into tb_project_items
+		(
+		 seq,
+		 prj_id,
+		 cont,
+		 grp,
+		 sort,
+		 parent_seq,
+		 lvl,
+		 read_cnt,
+		 file_grp_id,
+		 category_seq,
+		 title,
+		 use_yn,
+		 create_date,
+		 create_user_id,
+		 update_date,
+		 update_user_id,
+		 create_ip,
+		 complete_yn,
+		 bim_build_code,
+		 etc
+		 
+	    )
+	    values
+	    (
+	     #{seq},
+		 #{prj_id},
+		 #{cont},
+		 #{grp},
+		 #{sort},
+		 #{parent_seq},
+		 #{lvl},
+		 0,
+		 #{file_grp_id},
+		 #{category_seq},
+		 #{title},
+		 #{use_yn},
+		 now(),
+		 #{create_user_id},
+		 now(),
+		 #{update_user_id},
+		 #{create_ip},
+		 #{complete_yn},
+		 #{bim_build_code},
+		 #{etc}
+	    )
+	    ]]>
+	    
+	</update>
+	<select id="detail" parameterType="hashMap" resultType="projectItemsDto">
+		SELECT t1.seq, 
+		       t1.prj_id, 
+		       t1.title, 
+		       t1.cont, 
+		       t1.grp, 
+		       t1.sort, 
+		       t1.parent_seq, 
+		       t1.lvl, 
+		       t1.read_cnt, 
+		       t1.file_grp_id, 
+		       t1.use_yn, 
+		       t1.create_date, 
+		       t1.create_user_id, 
+		       t1.update_date, 
+		       t1.update_user_id, 
+			   t1.complete_yn,
+		       t2.prj_title, 
+		       t1.category_seq, 
+		       t3.user_name create_user_name, 
+		       t4.category_title 
+		FROM   tb_project_items t1 
+		       INNER JOIN tm_project t2 ON t1.prj_id = t2.prj_id 
+		       LEFT JOIN tb_project_users t3  ON t1.create_user_id = t3.user_id and t1.prj_id = t3.prj_id and t3.use_yn='Y'
+		       LEFT JOIN tb_project_category t4 
+		              ON t1.category_seq = t4.category_seq 
+		WHERE  seq = #{seq} 
+	</select>
+	
+	<select id="listRecent" parameterType="hashMap" resultType="projectItemsDto">
+		<![CDATA[
+		select * from  (select (row_number() over()) rn,
+			 t1.seq,
+			 t1.prj_id,
+			 t1.title,
+			 t1.cont,
+			 t1.grp,
+			 t1.sort,
+			 t1.parent_seq,
+			 t1.lvl,
+			 t1.read_cnt,
+			 t1.file_grp_id,
+			 t1.use_yn,
+			 t1.create_date,
+			 t1.create_user_id,
+			 t1.update_date,
+			 t1.update_user_id,
+			 t1.category_seq,
+			 t3.user_name create_user_name,
+			 t4.category_title,
+			 t2.prj_title
+		 from 
+		  tb_project_items t1 
+		  inner join tm_project t2 on t1.prj_id=t2.prj_id
+		  left join tb_project_users t3 on t1.create_user_id=t3.user_id
+		  left join tb_project_category t4 on t1.category_seq=t4.category_seq
+		 where
+		 t1.use_yn='Y'
+	
+		
+		 order by t1.sort desc,t1.lvl
+		 ) tbprj
+      where  rn between #{FirstIndex}+1 and #{LastIndex}+1
+      	 ]]>
+	</select>
+
+	<select id="list" parameterType="hashMap" resultType="projectItemsExtDto">
+		<![CDATA[
+		select 
+			 t1.seq,
+			 t1.prj_id,
+			 t1.title,
+			 t1.cont,
+			 t1.grp,
+			 t1.sort,
+			 t1.parent_seq,
+			 t1.lvl,
+			 t1.read_cnt,
+			 t1.file_grp_id,
+			 t1.use_yn,
+			 t1.create_date,
+			 t1.create_user_id,
+			 t1.update_date,
+			 t1.update_user_id,
+			 t1.category_seq,
+			 t1.bim_build_code,
+			 t3.user_name create_user_name,
+			 t4.category_title,
+			 t5.sys_title bim_build_code_title
+		 from 
+		  tb_project_items t1 
+		  inner join tm_project t2 on t1.prj_id=t2.prj_id
+		  left join tb_project_users t3 on t1.create_user_id=t3.user_id  and t3.prj_id =#{prj_id} and t3.use_yn='Y'
+		  left join tb_project_category t4 on t1.category_seq=t4.category_seq
+		  left join tc_code_sys t5 on t1.bim_build_code=t5.sys_code
+		 where
+		 t1.prj_id=#{prj_id}
+		 and
+		 t1.use_yn='Y'
+		 ]]>
+		 <if test="title!=null">
+			 and title like concat('%',#{title},'%')
+		 </if>
+		 <if test="cont!=null">
+			 and cont like concat('%',#{cont},'%')
+		 </if>
+		  <if test="user_name!=null">
+			 and t3.user_name like concat('%',#{user_name},'%')
+		 </if>
+		  <if test="st_date!=null">
+			 and DATE_FORMAT(t1.create_date,'%Y%m%d') between #{st_date} and #{en_date}
+		 </if>
+		 <if test="category_seq!=-1">
+		 	and t1.category_seq=#{category_seq}
+		 </if>
+		 order by t1.sort desc,t1.lvl
+		 limit #{limitIndex} offset #{FirstIndex}
+	</select>
+	
+	<select id="totalCount" parameterType="hashMap" resultType="int" >
+	<![CDATA[
+		select 
+			count(*)
+		 from 
+		  tb_project_items t1
+		 ,tm_project t2
+		 where
+		 t1.prj_id=t2.prj_id
+		 and 
+		 t1.prj_id=#{prj_id}
+		 and
+		 t1.use_yn='Y'
+		 ]]>
+		 <if test="title">
+			 and title like concat(#{title},'%')
+		 </if>
+		 <if test="cont!=null">
+			 and cont like concat(#{cont},'%')
+		 </if>
+		  <if test="create_user_id!=null">
+			 and create_user_id like concat(#{create_user_id},'%')
+		 </if>
+		  <if test="spell_kor!=null"> and 
+		( 
+		<![CDATA[
+		 case when t1.title < 'ㄱ' then SUBSTRING(t1.title, 1, 1) 
+            when ascii('ㄱ') <= ascii(t1.title) and 
+                 ascii(t1.title)<= ascii('ㅎ') then t1.title 
+            when t1.title < '나' then 'ㄱ'
+            when t1.title < '다' then 'ㄴ'
+            when t1.title < '라' then 'ㄷ'
+            when t1.title < '마' then 'ㄹ'
+            when t1.title < '바' then 'ㅁ'
+            when t1.title < '사' then 'ㅂ'
+            when t1.title < '아' then 'ㅅ'
+            when t1.title < '자' then 'ㅇ'
+            when t1.title < '차' then 'ㅈ'
+            when t1.title < '카' then 'ㅊ'
+            when t1.title < '타' then 'ㅋ'
+            when t1.title < '파' then 'ㅌ'
+            when t1.title < '하' then 'ㅍ'
+            else 'ㅎ'
+       		end=#{spell_kor}
+       		]]>
+		 )
+		 </if>
+		  <if test="spell_en!=null"> and t1.title like concat(#{spell_en},'%')</if>
+	</select>
+	<update id="updateSort" parameterType="hashMap">
+		<![CDATA[
+		update tb_project_items
+		set sort=sort-1
+		where
+		prj_id=#{prj_id}
+		and
+		sort between #{endNo} and #{startNo}
+		 ]]>
+	</update>
+	<update id="update" parameterType="projectItemsDto">
+		<![CDATA[
+		update tb_project_items
+		set
+		 cont=#{cont},
+		 title=#{title},
+		 read_cnt=#{read_cnt},
+		 file_grp_id=#{file_grp_id},
+		 category_seq=#{category_seq},
+		 update_date=now(),
+		 update_user_id=#{update_user_id}
+		 where
+		 prj_id=#{prj_id}
+		 and
+		 create_user_id=#{create_user_id}
+		 and
+		 seq=#{seq}
+		 ]]>
+	</update>
+	<update id="delete" parameterType="hashMap">
+		<![CDATA[
+		update tb_project_items
+		set use_yn='N'
+		,update_date=now()
+		,update_user_id=#{update_user_id}
+		where
+		prj_id=#{prj_id}
+		and
+		create_user_id=#{create_user_id}
+		and
+		seq=#{seq}
+		]]>
+	</update>
+
+	<select id="maxSort" parameterType="hashMap" resultType="int">
+	 <![CDATA[
+		select ifnull(max(sort),0) sort from tb_project_items
+		where prj_id=#{prj_id} and lvl=0 
+	]]>
+	</select>
+</mapper>

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectMaster" >
+	<select id="listByUser" parameterType="hashMap" resultType="projectMasterDto">
+		with main as (
+			select
+				prj_id
+			from
+				tb_project_users tpu
+			where
+				user_id = #{user_id} 
+			)
+				select
+				tm_project.prj_id,
+				tm_project.prj_title,
+				tm_project.read_role_id,
+				tm_project.write_role_id,
+				tm_project.use_yn,
+				tm_project.create_date,
+				tm_project.create_user_id,
+				tm_project.manage_user_id,
+				tm_project.confirm_yn,
+				tm_project.start_date,
+				tm_project.end_date,
+				seacd.sys_title sea_title ,
+				mngOrgcd.sys_title mng_org_title ,
+				mngcd.sys_title mng_title,
+				orgcd.sys_title org_title,
+				buildCd.sys_title build_code_title ,
+				buildTypeCd.sys_title build_type_title,
+				tu.user_name  
+			from
+				tm_project
+				inner join main on tm_project.prj_id = main.prj_id
+				left join tb_project_users tu on tm_project.prj_id=tu.prj_id and tm_project.create_user_id =tu.user_id
+				left join tc_code_sys orgcd on tm_project.org_code=orgcd.sys_code 
+				left join tc_code_sys mngcd on tm_project.mng_code=mngcd.sys_code
+				left join tc_code_sys mngOrgcd on tm_project.mng_code=mngOrgcd.sys_code
+				left join tc_code_sys seacd on tm_project.sea_code=seacd.sys_code
+				left join tc_code_sys buildCd on tm_project.build_code =buildCd.sys_code
+				left join tc_code_sys buildTypeCd on tm_project.build_type_code=buildTypeCd.sys_code
+			order by
+				tm_project.prj_id
+	</select>
+	<select id="list" parameterType="hashMap" resultType="projectMasterDto">
+		with cateogy as (
+			select
+				prj_id,
+				GROUP_CONCAT(NVL(category_seq, 'FM99999')) category_seqs,
+				GROUP_CONCAT(category_title) category_titles
+			from
+				tb_project_category
+			group by
+				prj_id)
+			select
+				tm_project.prj_id,
+				tm_project.prj_title,
+				tm_project.read_role_id,
+				tm_project.write_role_id,
+				tm_project.use_yn,
+				tm_project.create_date,
+				tm_project.create_user_id,
+				tm_project.manage_user_id,
+				cateogy.category_seqs,
+				cateogy.category_titles,
+				tu.user_name ,
+				seacd.sys_title sea_title ,
+				mngOrgcd.sys_title mng_org_title ,
+				mngcd.sys_title mng_title,
+				orgcd.sys_title org_title,
+				buildCd.sys_title build_code_title ,
+				buildTypeCd.sys_title build_type_title 
+			from
+				tm_project
+				left join cateogy on tm_project.prj_id = cateogy.prj_id
+				left join tb_project_users tu on tm_project.prj_id=tu.prj_id and tm_project.create_user_id =tu.user_id
+				left join tc_code_sys orgcd on tm_project.org_code=orgcd.sys_code 
+				left join tc_code_sys mngcd on tm_project.mng_code=mngcd.sys_code
+				left join tc_code_sys mngOrgcd on tm_project.mng_code=mngOrgcd.sys_code
+				left join tc_code_sys seacd on tm_project.sea_code=seacd.sys_code
+				left join tc_code_sys buildCd on tm_project.build_code =buildCd.sys_code
+				left join tc_code_sys buildTypeCd on tm_project.build_type_code=buildTypeCd.sys_code
+			order by
+				tm_project.prj_id
+			
+	</select>
+	<select id="detail" parameterType="hashMap" resultType="projectMasterDto">
+	select
+		prj_id,
+				prj_title,
+				read_role_id,
+				write_role_id,
+				update_date,
+				create_date,
+				update_user_id,
+				create_user_id,
+				manage_user_id,
+				use_yn,
+				org_code,
+				prj_commt,
+				prj_exp,
+				start_date,
+				end_date,
+				req_commt,
+				build_title,
+				port_title,
+				port_detail_title,
+				build_code,
+				mng_code,
+				mng_org_code,
+				setup_date,
+				open_yn,
+				sea_code,
+				build_type_code,
+				etc_mnt,
+				admin_commt,
+				addr,
+				point_xy,
+				confirm_yn
+	from
+	tm_project
+	where 
+	prj_id=#{prj_id}
+	</select>
+	
+	<update id="create" parameterType="projectMasterDto">
+		insert into tm_project (
+				prj_id,
+				prj_title,
+				read_role_id,
+				write_role_id,
+				update_date,
+				create_date,
+				update_user_id,
+				create_user_id,
+				manage_user_id,
+				use_yn,
+				org_code,
+				prj_commt,
+				prj_exp,
+				start_date,
+				end_date,
+				req_commt,
+				build_title,
+				port_title,
+				port_detail_title,
+				build_code,
+				mng_code,
+				mng_org_code,
+				setup_date,
+				open_yn,
+				sea_code,
+				build_type_code,
+				etc_mnt,
+				admin_commt,
+				addr,
+				point_xy,
+				confirm_yn
+				)
+			values(
+				#{prj_id},
+				#{prj_title},
+				#{read_role_id},
+				#{write_role_id},
+				now(),
+				now(),
+				#{update_user_id},
+				#{create_user_id},
+				#{manage_user_id},
+				'Y',
+				#{org_code},
+				#{prj_commt},
+				#{prj_exp},
+				#{start_date},
+				#{end_date},
+				#{req_commt},
+				#{build_title},
+				#{port_title},
+				#{port_detail_title},
+				#{build_code},
+				#{mng_code},
+				#{mng_org_code},
+				#{setup_date},
+				#{open_yn},
+				#{sea_code},
+				#{build_type_code},
+				#{etc_mnt},
+				#{admin_commt},
+				#{addr},
+				#{point_xy},
+				#{confirm_yn}
+			
+			)
+
+
+	</update>
+	
+	<update id="update" parameterType="projectMasterDto">
+	update tm_project 
+	set 
+		prj_title=#{prj_title},
+		read_role_id=#{read_role_id},
+		write_role_id=#{write_role_id},
+		update_date=now(),
+		update_user_id=#{update_user_id},
+		manage_user_id=#{manage_user_id},
+		use_yn=#{use_yn},
+		org_code=#{org_code},
+		prj_commt=#{prj_commt},
+		prj_exp=#{prj_exp},
+		start_date=#{start_date},
+		end_date=#{end_date},
+		req_commt=#{req_commt},
+		build_title=#{build_title},
+		port_title=#{port_title},
+		port_detail_title=#{port_detail_title},
+		build_code=#{build_code},
+		mng_code=#{mng_code},
+		mng_org_code=#{mng_org_code},
+		setup_date=#{setup_date},
+		open_yn=#{open_yn},
+		sea_code=#{sea_code},
+		build_type_code=#{build_type_code},
+		etc_mnt=#{etc_mnt},
+		admin_commt=#{admin_commt},
+		addr=#{addr},
+		point_xy=#{point_xy},
+		confirm_yn=#{confirm_yn}
+    where
+    prj_id=#{prj_id}
+	</update>
+	
+</mapper>

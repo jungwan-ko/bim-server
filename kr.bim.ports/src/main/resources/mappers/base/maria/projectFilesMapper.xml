@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="projectFile">
+	<select id="list" parameterType="hashMap" resultType="projectFilesDto">
+		
+			select
+			 t1.file_seq 
+			,t1.file_grp_id  
+			,t1.file_org_name 
+			,t1.file_new_name 
+			,t1.file_path 
+			,t1.file_size 
+			,t1.file_ext
+			,t1.file_title
+			,t1.prj_id
+			,t1.category_seq
+			,t1.create_user_id
+			,t1.create_date
+			,t1.update_date
+			,t2.user_name update_user_name
+			
+			from tb_project_files t1
+			left join tb_project_users t2 on t1.update_user_id=t2.user_id and t2.use_yn='Y' and t1.prj_id=t2.prj_id 
+			where
+			t1.use_yn='Y'
+			<if test="file_grp_id != null">
+				and t1.file_grp_id =#{file_grp_id} 
+			</if>
+			<if test="file_grp_ids != null">
+				and t1.file_grp_id in 
+				 <foreach item="item" index="index" collection="file_grp_ids" open="(" close=")" separator=",">
+				            #{item}
+				 </foreach>
+				
+			</if>
+		  
+	</select>
+	<update id="create" parameterType="projectFilesDto">
+		<selectKey keyProperty="file_seq" resultType="Integer" order="BEFORE"> SELECT nextval(tb_project_files_seq) FROM dual </selectKey>
+		 <![CDATA[
+		  insert into tb_project_files
+		 (  file_seq
+			,file_grp_id  
+			,file_sgrp_id  
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			,use_yn
+			,create_date
+			,update_date
+			,create_user_id
+			,update_user_id
+			,prj_id
+			,file_title
+			,category_seq
+		)
+		values(
+			 #{file_seq}
+			,#{file_grp_id}  
+			,#{file_seq}
+			,#{file_org_name} 
+			,#{file_new_name }
+			,#{file_path }
+			,#{file_size }
+			,#{file_ext}
+			,'Y'
+			,now()
+			,now()
+			,#{create_user_id}
+			,#{update_user_id}
+			,#{prj_id}
+			,#{file_title}
+			,#{category_seq}
+			)
+		]]>
+	</update>
+	<update id="createSubgrp" parameterType="projectFilesDto">
+		<selectKey keyProperty="file_seq" resultType="Integer" order="BEFORE"> SELECT nextval(tb_project_files_seq) FROM dual </selectKey>
+		 <![CDATA[
+		  insert into tb_project_files
+		 (  file_seq
+			,file_grp_id  
+			,file_sgrp_id  
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			,use_yn
+			,create_date
+			,update_date
+			,create_user_id
+			,update_user_id
+			,prj_id
+			,file_title
+		)
+		values(
+			 #{file_seq}
+			,#{file_grp_id}  
+			,#{file_sgrp_id}
+			,#{file_org_name} 
+			,#{file_new_name }
+			,#{file_path }
+			,#{file_size }
+			,#{file_ext}
+			,'Y'
+			,now()
+			,now()
+			,#{create_user_id}
+			,#{update_user_id}
+			,#{prj_id}
+			,#{file_title}
+			)
+		]]>
+	</update>
+	<delete id="delete" parameterType="hashMap">
+		update tb_project_files
+		set use_yn='N'
+		where
+		file_seq=#{file_seq}
+	</delete>
+
+	<select id="detail" parameterType="hashMap" resultType="projectFilesDto">
+		<![CDATA[
+			select 
+			file_seq
+			,file_grp_id
+			,file_sgrp_id    
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			,prj_id
+			from tb_project_files
+			where
+			file_seq=#{file_seq}
+		  ]]>
+	</select>
+	
+	<update id="updateFileGrp" parameterType="hashMap">
+		UPDATE tb_project_files 
+		SET    file_grp_id = #{newGrp} 
+		WHERE  file_grp_id = #{oldGrp} 
+	</update>
+
+	
+	
+
+</mapper>

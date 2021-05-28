@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="file">
+	<select id="list" parameterType="hashMap" resultType="fileDTO">
+		
+			select
+			 file_seq 
+			,file_grp_id  
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			from tb_attach_file
+			where
+			use_yn='Y'
+			<if test="file_grp_id != null">
+				and file_grp_id =#{file_grp_id} 
+			</if>
+			<if test="file_grp_ids != null">
+				and file_grp_id in 
+				 <foreach item="item" index="index" collection="file_grp_ids" open="(" close=")" separator=",">
+				            #{item}
+				 </foreach>
+				
+			</if>
+		  
+	</select>
+	<update id="create" parameterType="fileDTO">
+		 <![CDATA[
+		  insert into tb_attach_file
+		 (  file_seq
+			,file_grp_id  
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			,use_yn
+			,create_date
+			,update_date
+			,create_user_id
+			,update_user_id
+			
+		)
+		values(
+			 nextval(tb_attach_file_seq)
+			,#{file_grp_id}  
+			,#{file_org_name} 
+			,#{file_new_name }
+			,#{file_path }
+			,#{file_size }
+			,#{file_ext}
+			,'Y'
+			,now()
+			,now()
+			,#{create_user_id}
+			,#{update_user_id}
+			)
+		]]>
+	</update>
+	<delete id="delete" parameterType="hashMap">
+		update tb_attach_file
+		set use_yn='N'
+		where
+		file_seq=#{file_seq}
+	</delete>
+
+	<select id="detail" parameterType="hashMap" resultType="fileDTO">
+		<![CDATA[
+			select 
+			file_seq
+			,file_grp_id  
+			,file_org_name 
+			,file_new_name 
+			,file_path 
+			,file_size 
+			,file_ext
+			from tb_attach_file
+			where
+			file_seq=#{file_seq}
+		  ]]>
+	</select>
+	
+	<update id="updateFileGrp" parameterType="hashMap">
+		UPDATE tb_attach_file 
+		SET    file_grp_id = #{newGrp} 
+		WHERE  file_grp_id = #{oldGrp} 
+	</update>
+
+</mapper>

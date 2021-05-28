@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="projectUsers">
+	<select id="detail" parameterType="hashMap" resultType="projectUsersDto">
+	select
+				user_id,
+				user_email,
+				create_date,
+				update_date,
+				update_user_id,
+				create_user_id,
+				use_yn,
+				owner_yn,
+				prj_id,
+				user_name
+			from
+				tb_project_users
+			where
+				use_yn='Y'
+				<if test="user_id != nunll">
+				and user_id=#{user_id}
+				</if>
+				<if test="prj_id != nunll">
+					and prj_id=#{prj_id}
+				</if>
+	</select>
+	<select id="list" parameterType="hashMap" resultType="projectUsersDto">
+		<![CDATA[
+			select
+				user_id,
+				user_email,
+				create_date,
+				update_date,
+				update_user_id,
+				create_user_id,
+				use_yn,
+				owner_yn,
+				prj_id,
+				user_name
+			from
+				tb_project_users
+			where
+				use_yn='Y'
+		]]>
+		<if test="user_id != nunll">
+			and user_id=#{user_id}
+		</if>
+		<if test="prj_id != nunll">
+			and prj_id=#{prj_id}
+		</if>
+	</select>
+	<select id="listAll" parameterType="hashMap" resultType="projectUsersDto">
+		<![CDATA[
+			select
+				user_id,
+				user_email,
+				create_date,
+				update_date,
+				update_user_id,
+				create_user_id,
+				use_yn,
+				owner_yn,
+				prj_id,
+				user_name
+			from
+				tb_project_users
+			where
+			 prj_id=#{prj_id}	
+		]]>
+	</select>
+	<update id="create" parameterType="projectUsersDto">
+		insert
+		into
+		tb_project_users (
+		user_id,
+		user_email,
+		create_date,
+		update_date,
+		update_user_id,
+		create_user_id,
+		use_yn,
+		owner_yn,
+		prj_id,
+		user_name)
+	values(
+		#{user_id},
+		#{user_email},
+		now(),
+		now(),
+		#{update_user_id},
+		#{create_user_id},
+		#{use_yn},
+		#{owner_yn},
+		#{prj_id},
+		#{user_name}
+		)
+	</update>
+	
+	<update id="update" parameterType="projectUsersDto">
+		update tb_project_users
+		set user_email=#{user_email},
+			user_name=#{user_name},
+			update_user_id=#{update_user_id},
+			owner_yn=#{owner_yn},
+			use_yn=#{use_yn},
+			update_date=now()
+		where 
+		prj_id=#{prj_id}
+		and
+		user_id=#{user_id}
+	</update>
+	
+	<update id="delete"  parameterType="hashMap">
+		update  tb_project_users
+		set use_yn='N',
+			owner_yn='N',
+			update_user_id=#{update_user_id},
+			update_date=now()
+		where
+		prj_id=#{prj_id}
+		and
+		user_id=#{user_id}
+	</update>
+</mapper>

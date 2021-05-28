@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="userPhoto">
+	<select id="detail" parameterType="hashMap" resultType="userPhotoDto">
+		<![CDATA[
+		select 
+		 seq
+		,user_id
+		,file_seq
+		,create_date
+		,create_user_id
+		from tb_user_photo
+  		where user_id=#{user_id}
+  		and
+  		use_yn='Y'
+
+		]]>
+	</select>
+	<update id="create" parameterType="hashMap">
+		<![CDATA[
+		insert into tb_user_photo
+		(
+		seq,user_id, file_seq, create_date, create_user_id, use_yn
+		)
+		values
+		(
+		 nextval(tb_user_photo_seq)
+		 ,#{user_id}
+		 ,#{file_seq}
+		 ,now()
+		 ,#{create_user_id}
+		 ,'Y'
+		)
+		]]>
+	</update>
+	<update id="delete" parameterType="hashMap">
+		<![CDATA[
+			update tb_user_photo
+				set use_yn='N'
+			where 
+				 user_id=#{user_id}
+ 		]]>
+	</update>
+	
+	
+	
+</mapper>
